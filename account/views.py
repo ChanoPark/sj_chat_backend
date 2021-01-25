@@ -32,7 +32,7 @@ def user_validation(data):
 @api_view(['POST'])
 def register(request):
     data = json.loads(request.body)
-    required_fields = ('user_id','username','nickname','email','classnum','password')
+    required_fields = ('user_id','username','nickname','email','classnum','password','university','faculty','major')
     
     # JSON 필드 체크
     if not all(i in data for i in required_fields):
@@ -171,6 +171,9 @@ def header_info(request):
         "username" : user.username,
         "user_type" : user.user_type,
         "classnum" : user.classnum,
+        "university":user.university,
+        "faculty":user.faculty,
+        "major":user.major,
     }
 
     return Response(data, status=status.HTTP_200_OK)
@@ -187,7 +190,10 @@ def user_profile(request, user_id):
             "user_id":user.user_id,
             "username":user.username,
             "nickname":user.nickname,
-            "email":user.email
+            "email":user.email,
+            "university":user.university,
+            "faculty":user.faculty,
+            "major":user.major
             #usertype 생략
         }
         return Response(data, status=status.HTTP_200_OK)

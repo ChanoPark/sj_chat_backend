@@ -13,7 +13,7 @@ class UserCreationForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('user_id','username', 'nickname', 'classnum','email')
+        fields = ('user_id','username', 'nickname', 'classnum','email','university','faculty','major')
 
     def clean_password2(self):
         #일치확인
@@ -38,7 +38,8 @@ class UserChangeForm(forms.ModelForm):
     class Meta:
         model = User
         fields = (
-            'user_id','username', 'nickname','classnum','email','is_admin','is_active'
+            'user_id','username', 'nickname','classnum','email','is_admin','is_active',
+            'university', 'faculty', 'major'
         )
     
     def clean_password(self):
@@ -50,20 +51,22 @@ class UserAdmin(BaseUserAdmin):
 
     list_display = (
         'user_id','username', 'nickname', 'classnum', 'email',
-        'is_admin','is_active'
+        'university', 'faculty', 'major','is_admin','is_active'
     )
     list_filter = ('is_admin',)
     fieldsets = (
         (None, {'fields': ('user_id', 'password')}),
         ('Personal info', {'fields': (
-            'username', 'nickname', 'classnum', 'email'
+            'username', 'nickname', 'classnum', 'email',
+            'university', 'faculty', 'major'
         )}),
         ('Permissions', {'fields': ('is_admin', 'is_active', 'user_type')}),
     )
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields' : ('user_id','username', 'nickname', 'email', 'password1','password2','classnum'),
+            'fields' : ('user_id','username', 'nickname', 'email', 'password1','password2','classnum',
+                        'university', 'faculty', 'major'),
         }),
     )
 
