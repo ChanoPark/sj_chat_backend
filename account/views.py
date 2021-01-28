@@ -64,7 +64,7 @@ def register(request):
             model_to_dict(user),
             status=status.HTTP_201_CREATED
         )
-
+"""
 @api_view(['GET', 'PUT'])
 @permission_classes((IsAuthenticated,)) #( ~,) 형태로 있으면 튜플
 def info(request):
@@ -202,3 +202,5 @@ def user_profile(request, user_id):
             {"message":"User not exist"},
             status=status.HTTP_404_NOT_FOUND
         )
+
+"""

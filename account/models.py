@@ -7,7 +7,8 @@ from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _ 
 
 class UserManager(BaseUserManager): #User를 생성할때 쓰는 헬퍼클래스, 장고모델들은 Manager를 통해 쿼리셋을 받음
-    def create_user(self, user_id, username, nickname,classnum, email, university, faculty, major, password=None, **extra_fields): # **extra_fields *이 2개면 나머지 값을 딕셔너리로 바꿔서 저장하고, 1개는 tuple로 저장한다.
+    def create_user(self, user_id, username, nickname,classnum, 
+                    email, university, faculty, major, password=None, **extra_fields): # **extra_fields *이 2개면 나머지 값을 딕셔너리로 바꿔서 저장하고, 1개는 tuple로 저장한다.
         #이메일, 아이디, 닉네임, 비밀번호, 학번으로 User 인스턴스 생성 
         if not user_id:
             raise ValueError('Users must have an user_id') # rasie는 일부러 에러를 발생시키는 것이다.
