@@ -48,7 +48,7 @@ class UserManager(BaseUserManager): #User를 생성할때 쓰는 헬퍼클래스
         return user
 
 class User(AbstractBaseUser, PermissionsMixin):  #실제 모델이 상속받아 생성하는 클래스
-    objects = UserManager()  
+    objects = UserManager() 
     user_id = models.CharField(
         verbose_name ='user_id',
         max_length=16,
