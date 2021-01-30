@@ -66,10 +66,10 @@ def register(request):
             model_to_dict(user),
             status=status.HTTP_201_CREATED
         )
-"""
-학번도 유니코드임 -> 17,18학번 이렇게 입력할꺼면 DB수정해야됌
-그대로 2017270920 이렇게 받을꺼면 validation에서 중복되면 에러메세지뜨게 해야함.
-"""
+
+#학번도 유니코드임 -> 17,18학번 이렇게 입력할꺼면 DB수정해야됌
+#그대로 2017270920 이렇게 받을꺼면 validation에서 중복되면 에러메세지뜨게 해야함.
+
 
 @api_view(['GET', 'PUT'])
 @permission_classes((IsAuthenticated,)) #( ~,) 형태로 있으면 튜플
