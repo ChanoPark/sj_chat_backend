@@ -12,6 +12,9 @@ from account.serializer import UserShortcutSerializer
 from django.forms.models import model_to_dict
 import re
 
+from django.contrib.auth.forms import PasswordChangeForm
+
+
 def user_validation(data):
     user_check = User.objects.filter(user_id=data['user_id']) #아이디 체크
     email_check1 = re.compile(
@@ -63,6 +66,10 @@ def register(request):
             model_to_dict(user),
             status=status.HTTP_201_CREATED
         )
+"""
+학번도 유니코드임 -> 17,18학번 이렇게 입력할꺼면 DB수정해야됌
+그대로 2017270920 이렇게 받을꺼면 validation에서 중복되면 에러메세지뜨게 해야함.
+"""
 
 @api_view(['GET', 'PUT'])
 @permission_classes((IsAuthenticated,)) #( ~,) 형태로 있으면 튜플
@@ -226,4 +233,21 @@ def user_profile(request, user_id):       #다른사람 유저정보 확인
             status=status.HTTP_404_NOT_FOUND
         )
 """
+@api_view(['DELETE'])
+@permission_classes((IsAuthenticated,))
+def user_delete(request):
+    data = request.data
+    user_check = User.objects.filter(user_id=data['user_id'])
 
+    if not user_check.exists():
+        return Response(
+            {"message":"아이디가 일치하지 않습니다."},
+            status=status.HTTP_409_CONFLICT
+        )
+    else:
+        user = request.user
+        user.delete()
+        return Response(
+            {"message":"회원탈퇴가 완료되었습니다."},
+            status=status.HTTP_200_OK
+        )
