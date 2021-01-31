@@ -70,7 +70,6 @@ class User(AbstractBaseUser, PermissionsMixin):  #실제 모델이 상속받아 
         )
     classnum = models.PositiveIntegerField(
         verbose_name='Classnum',
-        unique=True
     )
     university = models.CharField(
         verbose_name='University',

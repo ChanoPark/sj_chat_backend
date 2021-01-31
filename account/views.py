@@ -77,7 +77,6 @@ def info(request):
     user = request.user   #오브젝트에 들어있는 속성들
     data = request.data   #PUT으로 들어온 데이터들
     email = request.user.email
-    classnum = request.user.classnum
     nickname= request.user.nickname
 
     if request.method == "GET": #사용자 정보 반환
@@ -100,7 +99,6 @@ def info(request):
                 r'[0-9a-zA-Z]+@[0-9a-zA-Z]+\.[0-9a-zA-Z]{2,}'            # 이메일 정규 표현식
         ).search(data['email'])
         email_check2 = User.objects.filter(email=data['email'])          # 이메일 중복 체크
-        classnum_check = User.objects.filter(classnum=data['classnum'])  #학번 중복 체크
         nickname_check = User.objects.filter(nickname=data['nickname'])  #별명 중복 체크
 
         if not check_password:  #check_password로 변경
@@ -116,11 +114,6 @@ def info(request):
         elif email_check2.exists() and email != data['email']:
             return Response(
                 {"message":"이미 존재하는 이메일입니다."},
-                status=status.HTTP_409_CONFLICT
-            )
-        elif classnum_check.exists() and classnum != data['classnum']:
-            return Response(
-                {"message":"이미 존재하는 학번입니다."},
                 status=status.HTTP_409_CONFLICT
             )
         elif nickname_check.exists() and nickname != data['nickname']:
