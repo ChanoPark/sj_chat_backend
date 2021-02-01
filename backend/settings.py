@@ -29,7 +29,7 @@ SECRET_KEY = my_settings.SECRET_KEY
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'ec2-15-164-224-49.ap-northeast-2.compute.amazonaws.com', '15.164.224.49', '127.0.0.1'
+    'ec2-3-34-136-118.ap-northeast-2.compute.amazonaws.com', '3.34.136.118', '127.0.0.1'
 ]
 
 
@@ -110,11 +110,11 @@ LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'Asia/seoul'
 
-USE_I18N = True
+#USE_I18N = True
 
-USE_L10N = True
+#USE_L10N = True
 
-USE_TZ = True
+#USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
