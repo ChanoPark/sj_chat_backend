@@ -9,9 +9,9 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-
+import os
 from pathlib import Path
-import datetime
+from django.utils import timezone
 import my_settings
 
 
@@ -28,7 +28,9 @@ SECRET_KEY = my_settings.SECRET_KEY
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'ec2-52-78-70-83.ap-northeast-2.compute.amazonaws.com', ' 52.78.70.83', '127.0.0.1'
+]
 
 
 # Application definition
@@ -106,19 +108,20 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'Asia/seoul'
+TIME_ZONE = 'Asia/Seoul'
 
-USE_I18N = True
+#USE_I18N = True
 
-USE_L10N = True
+#USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -133,8 +136,8 @@ JWT_AUTH = {
     'JWT_SECRET_KEY': SECRET_KEY,
     'JWT_ALGORITHM': 'HS256',
     'JWT_ALLOW_REFRESH': True,
-    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=7),
-    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=28),
+    'JWT_EXPIRATION_DELTA': timezone.timedelta(days=7),
+    'JWT_REFRESH_EXPIRATION_DELTA': timezone.timedelta(days=28),
 }
 
 AUTH_USER_MODEL = 'account.User'

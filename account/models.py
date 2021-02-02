@@ -1,5 +1,5 @@
 from django.db import models
-
+#안녕~
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser, PermissionsMixin
 )
