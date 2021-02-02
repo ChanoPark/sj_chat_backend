@@ -82,7 +82,7 @@ def info(request):
         result = UserShortcutSerializer(user)
         return Response(result.data, status=status.HTTP_200_OK)
     else:
-
+        """
         required_field = ('password')     #   Q. 회원정보 수정하는데 꼭 어떤 정보가 들어와야할까? 
                                           #   A. 아무나 정보를 바꾸는 것을 방지하기 위해 비밀번호는 확인하는걸로
         #if not all(i in data for i in required_field):
@@ -91,20 +91,21 @@ def info(request):
                 {"message":"필수 양식을 입력해주세요"},
                 status=status.HTTP_400_BAD_REQUEST
             )
-        
+        """ 
                   
         email_check1 = re.compile(
                 r'[0-9a-zA-Z]+@[0-9a-zA-Z]+\.[0-9a-zA-Z]{2,}'            # 이메일 정규 표현식
         ).search(data['email'])
         email_check2 = User.objects.filter(email=data['email'])          # 이메일 중복 체크
         nickname_check = User.objects.filter(nickname=data['nickname'])  #별명 중복 체크
-
-        if not check_password:  #check_password로 변경
+        """
+        if not check_password(data['password'],user.password):  #check_password로 변경
             return Response(
                 {"message":"비밀번호를 확인해주세요"},
                 status=status.HTTP_403_FORBIDDEN
             )
-        elif email_check1 is None:
+        """
+        if email_check1 is None:
             return Response(
                 {"Message":"정확한 이메일 형식을 입력해주세요"},
                 status=status.HTTP_400_BAD_REQUEST
@@ -148,15 +149,9 @@ def change_password(request):
 
     required_field = ('current_password', 'new_password1', 'new_password2')
 
-    if not all(i in data for i in required_field):
-        return Response(
-            {"message":"필수 양식을 입력해주세요."},
-            status=status.HTTP_400_BAD_REQUEST
-        )
-    
     if not check_password(data['current_password'], user.password):  #현재 비밀번호 확인
         return Response(
-            {"message":"필수 양식을 입력해주세요."},
+            {"message":"현재 비밀번호가 일치하지 않습니다."},
             status=status.HTTP_400_BAD_REQUEST
         )
     
@@ -228,9 +223,15 @@ def user_profile(request, user_id):       #다른사람 유저정보 확인
 @permission_classes((IsAuthenticated,))
 def user_delete(request):
     data = request.data
+    user = request.user
     user_check = User.objects.filter(user_id=data['user_id'])
 
-    if not user_check.exists():
+    if not check_password(data['password'], user.password):  #현재 비밀번호 확인
+        return Response(
+            {"message":"비밀번호가 일치하지 않습니다."},
+            status=status.HTTP_400_BAD_REQUEST
+        )
+    elif not user_check.exists():
         return Response(
             {"message":"아이디가 일치하지 않습니다."},
             status=status.HTTP_409_CONFLICT
