@@ -14,7 +14,6 @@ import re
 
 from django.contrib.auth.forms import PasswordChangeForm
 
-
 def user_validation(data):
     user_check = User.objects.filter(user_id=data['user_id']) #아이디 체크
     email_check1 = re.compile(
@@ -84,7 +83,6 @@ def info(request):
         return Response(result.data, status=status.HTTP_200_OK)
     else:
 
-        
         required_field = ('password')     #   Q. 회원정보 수정하는데 꼭 어떤 정보가 들어와야할까? 
                                           #   A. 아무나 정보를 바꾸는 것을 방지하기 위해 비밀번호는 확인하는걸로
         #if not all(i in data for i in required_field):
@@ -148,7 +146,7 @@ def change_password(request):
     user = request.user
     data = request.data
 
-    required_field = ('current_password', ' new_password1', 'new_password2')
+    required_field = ('current_password', 'new_password1', 'new_password2')
 
     if not all(i in data for i in required_field):
         return Response(

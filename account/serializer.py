@@ -5,3 +5,4 @@ class UserShortcutSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ("user_id","username","email","nickname","university","faculty","major","classnum")
+        
