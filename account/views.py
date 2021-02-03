@@ -13,7 +13,7 @@ from django.forms.models import model_to_dict
 import re
 
 from django.contrib.auth.forms import PasswordChangeForm
-
+from django.contrib import auth
 def user_validation(data):
     user_check = User.objects.filter(user_id=data['user_id']) #아이디 체크
     email_check1 = re.compile(
@@ -140,6 +140,13 @@ def info(request):
                 status=status.HTTP_202_ACCEPTED
             )
 
+@api_view(['POST'])
+def user_logout(request):
+    auth.logout(request)
+    return Response(
+        {"message":"로그아웃이 완료되었습니다."},
+        status=status.HTTP_200_OK
+    )
 
 @api_view(['PUT'])
 @permission_classes((IsAuthenticated,))
